@@ -1,14 +1,13 @@
 resource "google_storage_bucket" "function_source" {
-  name     = "${var.project_id}-function-source"
-  location = var.region
-
+  name                        = "${var.project_id}-function-source"
+  location                    = var.region
   uniform_bucket_level_access = true
 }
 
 resource "google_storage_bucket_object" "function_source" {
   name   = "function-source.zip"
   bucket = google_storage_bucket.function_source.name
-  source = "function-source.zip"
+  source = "${path.module}/function-source.zip"
 }
 
 resource "google_cloudfunctions2_function" "app_function" {
